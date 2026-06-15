@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub Reviews & Community Feedback</title>
+  
+  <!-- Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #0f2e1b url('DairyBox2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    /* Dark green overlay to ensure text contrast over background2.jpg */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 36, 21, 0.75); /* Rich deep forest green tint */
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================
+        HEADER & NAVIGATION
+    ========================= */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      background: rgba(15, 46, 27, 0.6);
+      padding: 15px 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .back-btn {
+      background: #114d25;
+      border: 1px solid #ffcc00;
+      color: #ffcc00; /* Dairy Yellow Accent */
+      padding: 10px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #ffcc00;
+      color: #0c2415;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 204, 0, 0.3);
+    }
+
+    /* =========================
+        BROWNISH-WHITE CONTAINERS
+    ========================= */
+    .review-form-card, .review-item {
+      background: rgba(245, 242, 235, 0.96); /* Elegant Creamy / Brownish-White */
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(139, 126, 116, 0.2);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      margin-bottom: 30px;
+      color: #1f2e24; /* Deep forest-charcoal text for stellar contrast */
+    }
+
+    .review-item {
+      padding: 24px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #114d25; /* Forest Green Labels */
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid rgba(17, 77, 37, 0.25);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #1f2e24;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #114d25;
+      box-shadow: 0 0 8px rgba(17, 77, 37, 0.2);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Star Rating Selector */
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 28px;
+      color: rgba(17, 77, 37, 0.2);
+      cursor: pointer;
+      margin-bottom: 0;
+      transition: color 0.2s ease;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #e6b800; /* Rich golden yellow stars */
+    }
+
+    .submit-btn {
+      background: #114d25; /* Iconic Brand Green */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #ffcc00; /* Transforms to Dairy Yellow on Hover */
+      color: #0c2415;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 204, 0, 0.3);
+    }
+
+    /* =========================
+        REVIEWS FEED LIST
+    ========================= */
+    .reviews-feed-title {
+      font-size: 20px;
+      color: #ffcc00; /* Dairy Yellow Section Title */
+      margin-bottom: 20px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .user-info h3 {
+      font-size: 17px;
+      color: #114d25;
+      font-weight: 700;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .tag-coop { background: #ffe680; color: #524100; }
+    .tag-dairy { background: #114d25; color: #ffffff; }
+
+    .review-meta {
+      text-align: right;
+    }
+
+    .stars-display {
+      color: #e6b800;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .review-date {
+      font-size: 12px;
+      color: #5c6b61;
+    }
+
+    .review-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #2b3a30;
+    }
+
+    .no-reviews {
+      text-align: center;
+      padding: 40px;
+      color: #ffffff;
+      font-size: 14px;
+      background: rgba(15, 46, 27, 0.7);
+      border: 1px dashed rgba(255,255,255,0.3);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 600px) {
+      header { margin-bottom: 25px; }
+      h1 { font-size: 22px; }
+      .review-form-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Feedback Hub</h1>
+      <a href="index.html" class="back-btn">🏠 Back to Home</a>
+    </header>
+
+    <!-- Entry Form -->
+    <div class="review-form-card">
+      <form id="reviewForm">
+        <div class="form-group">
+          <label for="userName">Your Name</label>
+          <input type="text" id="userName" required placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+          <label for="hubTarget">Which branch are you reviewing?</label>
+          <select id="hubTarget" required>
+            <option value="Dairy Box Store">🍦 Dairy Box Store</option>
+            <option value="Pinoy Credit Cooperative">🏢 Pinoy Credit Cooperative</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="userComment">Your Review</label>
+          <textarea id="userComment" required placeholder="Write your experience here..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Post Review Globally</button>
+      </form>
+    </div>
+
+    <!-- Live Stream Header -->
+    <div class="reviews-feed-title">Recent Community Reviews (Live)</div>
+    <div id="reviewsContainer">
+      <div class="no-reviews">Connecting to live feed...</div>
+    </div>
+  </div>
+
+  <!-- FIREBASE MODULES SDK VIA CDN -->
+ <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Firebase Configuration Settings
+    const firebaseConfig = {
+      apiKey: "AIzaSyA__k1o9aqvJdHHCpakUWFgS8nbm2iqB54",
+      authDomain: "queuehub-29698.firebaseapp.com",
+      databaseURL: "https://queuehub-29698-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "queuehub-29698",
+      storageBucket: "queuehub-29698.firebasestorage.app",
+      messagingSenderId: "995891160219",
+      appId: "1:995891160219:web:2e5584d9b301a69cab523e",
+      measurementId: "G-GVE2H19PPD"
+    };
+
+    // Initialize Firebase Services
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    // OLD CODE: const reviewsRef = ref(db, "hub_reviews");
+const reviewsRef = ref(db, "reviews"); // Matches your updated Firebase rules JSON
+
+    const reviewForm = document.getElementById("reviewForm");
+    const reviewsContainer = document.getElementById("reviewsContainer");
+
+    // Define your secure deletion password here
+    const ADMIN_PASSWORD = "Pinoycoop2026"; 
+
+    // Write data to Firebase Realtime DB
+    reviewForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("userName").value;
+      const target = document.getElementById("hubTarget").value;
+      const comment = document.getElementById("userComment").value;
+      const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
+      
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const date = new Date().toLocaleDateString("en-US", options);
+
+      const reviewData = {
+        name: name,
+        target: target,
+        rating: rating,
+        comment: comment,
+        date: date,
+        timestamp: Date.now()
+      };
+
+      push(reviewsRef, reviewData)
+        .then(() => {
+          reviewForm.reset();
+        })
+        .catch((error) => {
+          alert("Database write error: " + error.message);
+        });
+    });
+
+    // Realtime Database Listener Stream
+    onValue(reviewsRef, (snapshot) => {
+      reviewsContainer.innerHTML = "";
+      
+      if (!snapshot.exists()) {
+        reviewsContainer.innerHTML = `<div class="no-reviews">No reviews posted yet. Be the first to share your experience!</div>`;
+        return;
+      }
+
+      const data = snapshot.val();
+      const reviewsList = [];
+      
+      // Map Firebase random keys into the objects so we know exactly which item to delete later
+      for (let key in data) {
+        reviewsList.push({
+          firebaseKey: key,
+          ...data[key]
+        });
+      }
+
+      // Sort with newest on top
+      reviewsList.sort((a, b) => b.timestamp - a.timestamp);
+
+      reviewsList.forEach(review => {
+        const badgeClass = review.target === "Dairy Box Store" ? "tag-dairy" : "tag-coop";
+        const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+        const reviewItem = document.createElement("div");
+        reviewItem.className = "review-item";
+        reviewItem.innerHTML = `
+          <div class="review-header">
+            <div class="user-info">
+              <h3>${escapeHTML(review.name)}</h3>
+              <span class="tag-badge ${badgeClass}">${review.target}</span>
+            </div>
+            <div class="review-meta">
+              <div class="stars-display">${stars}</div>
+              <div class="review-date">${review.date}</div>
+            </div>
+          </div>
+          <div class="review-body">
+            ${escapeHTML(review.comment)}
+          </div>
+          <button class="delete-btn" data-key="${review.firebaseKey}" style="background: transparent; border: none; color: #ff4d6d; font-size: 12px; cursor: pointer; opacity: 0.6; margin-top: 10px; font-weight: 600; display: block; transition: opacity 0.2s;">🗑️ Remove Review</button>
+        `;
+        
+        // Setup individual button listener to security check before triggering Firebase deletion
+        reviewItem.querySelector(".delete-btn").addEventListener("click", (e) => {
+          const keyToDelete = e.target.getAttribute("data-key");
+          triggerSecureDelete(keyToDelete);
+        });
+
+        reviewsContainer.appendChild(reviewItem);
+      });
+    });
+
+    // Security Verification Engine
+   function triggerSecureDelete(key) {
+  const userInput = prompt("Enter Admin Password to delete this review:");
+  
+  if (userInput === null) return; // User canceled the dialog box
+
+  if (userInput === ADMIN_PASSWORD) {
+    // FIX: Changed 'hub_reviews/${key}' to 'reviews/${key}'
+    const itemRef = ref(db, `reviews/${key}`);
+    
+    remove(itemRef)
+      .then(() => {
+        alert("Review successfully deleted from the cloud live feed!");
+      })
+      .catch((error) => {
+        alert("Error removing item: " + error.message);
+      });
+  } else {
+    alert("Incorrect Admin Password! Access denied.");
+  }
+}
+
+    // XSS Sanitization helper
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+  </script>
+</body>
+</html>
